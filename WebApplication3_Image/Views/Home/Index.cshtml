@@ -9,7 +9,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-3">
         <h2>Getting started</h2>
         <p>
             ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
@@ -18,14 +18,62 @@
         </p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <h2>Get more libraries</h2>
         <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <h2>Web Hosting</h2>
         <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
         <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
     </div>
+
+    <div class="col-md-3">
+       
+        <input type="file" onchange="previewFile()"><br>
+        <img src="" height="200" alt="Image preview...">
+    </div>
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+
+        $(function () {
+
+
+            $("#imageName").on('change', function () {
+
+                alert($(this).val())  })     
+                     
+        })
+
+        function previewFile() {
+            var preview = document.querySelector('img');
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                preview.src = reader.result;
+            }, false);
+
+            if (file) {
+
+               // reader.readAsDataURL(file)
+
+                $.when(fileConverting(reader,file)).done(function () {
+                    console.log("done result", reader.result)
+                    reader.readAsDataURL(file)
+                })
+              
+            }
+
+            console.log("Before result",reader.result)
+        }
+
+        var fileConverting = function (reader,f) {
+            return reader.readAsDataURL(f);
+        }
+
+
+    </script>}
