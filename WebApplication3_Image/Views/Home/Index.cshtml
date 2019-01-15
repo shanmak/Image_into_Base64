@@ -38,7 +38,11 @@
 
 @section scripts {
     <script type="text/javascript">
+        var image = {};
 
+        var stirngbef = null;
+        var stirngaft = null;
+        var json = null;
         $(function () {
 
 
@@ -59,21 +63,34 @@
 
             if (file) {
 
-               // reader.readAsDataURL(file)
+                $.when(reader.readAsDataURL(file)).then(() => {
 
-                $.when(fileConverting(reader,file)).done(function () {
-                    console.log("done result", reader.result)
-                    reader.readAsDataURL(file)
-                })
+                    console.log("arry", Array.from(reader.result));
+                    stirngbef = Array.from(reader.result).length;
+                    image.Id = 0;
+                    image.image = Array.from(reader.result);
+                }).then(() => {
+
+                    json  = JSON.stringify(image);
+                    console.log("json", json);
+
+                    }).then(() => {
+                        var c = JSON.parse(json)
+                        var arry = c.image;
+                        stirngaft = arry.length;            
+
+                    }).then(() => {
+
+                        if (stirngbef === stirngaft) {
+                            console.log("done")
+                        }
+                    })
+                       
               
             }
 
-            console.log("Before result",reader.result)
         }
 
-        var fileConverting = function (reader,f) {
-            return reader.readAsDataURL(f);
-        }
 
 
     </script>}
